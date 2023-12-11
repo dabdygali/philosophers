@@ -6,7 +6,7 @@
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:53:56 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/11/23 15:20:35 by dabdygal         ###   ########.fr       */
+/*   Updated: 2023/12/07 17:50:22 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "philo.h"
 
 /**
- * @brief Test and warns the arguments count.
+ * @brief Test and warns the arguments count(index dimension).
  * @details Function test whether arguments count is within the range 
  * between \p min_argc and \p max_argc. If not within the range makes warning 
  * on standard error output.

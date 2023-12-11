@@ -1,34 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args_warn.c                                  :+:      :+:    :+:   */
+/*   control_write.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/23 14:04:01 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/07 19:33:58 by dabdygal         ###   ########.fr       */
+/*   Created: 2023/12/11 16:30:55 by dabdygal          #+#    #+#             */
+/*   Updated: 2023/12/11 16:39:55 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <pthread.h>
 #include "philo.h"
-#include <unistd.h>
 
-int	check_args_warn(int argc, char *argv[])
+int	control_write(t_seat *seat, int status)
 {
-	int	tmp;
-
-	if (argc < 2)
-		return (0);
-	tmp = ft_checkwarn_argc(argc, MIN_ARGC + 1, MAX_ARGC + 1);
-	if (tmp <= 0)
-		return (tmp);
-	while (--argc > 0)
-	{
-		if (ft_str_is_int(argv[argc]) == 0 || ft_atoi(argv[argc]) < 0)
-		{
-			ft_putstr_fd("Invalid argument\n", STDERR_FILENO);
-			return (-1);
-		}
-	}
-	return (1);
+	if (lock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
+		return (-1);
+	seat->cntrl->status = status;
+	if (unlock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
+		return (-1);
+	return (0);
 }

@@ -1,34 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_args_warn.c                                  :+:      :+:    :+:   */
+/*   unlock_warn.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/23 14:04:01 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/07 19:33:58 by dabdygal         ###   ########.fr       */
+/*   Created: 2023/12/11 15:50:22 by dabdygal          #+#    #+#             */
+/*   Updated: 2023/12/11 16:21:25 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
 #include <unistd.h>
+#include <pthread.h>
+#include "philo.h"
 
-int	check_args_warn(int argc, char *argv[])
+int	unlock_warn(pthread_mutex_t *mutex, pthread_mutex_t *print)
 {
-	int	tmp;
+	int	i;
 
-	if (argc < 2)
-		return (0);
-	tmp = ft_checkwarn_argc(argc, MIN_ARGC + 1, MAX_ARGC + 1);
-	if (tmp <= 0)
-		return (tmp);
-	while (--argc > 0)
+	i = pthread_mutex_unlock(mutex);
+	if (i != 0)
 	{
-		if (ft_str_is_int(argv[argc]) == 0 || ft_atoi(argv[argc]) < 0)
-		{
-			ft_putstr_fd("Invalid argument\n", STDERR_FILENO);
-			return (-1);
-		}
+		pthread_mutex_lock(print);
+		ft_putstr_fd("Failed to unlock mutex\n", STDERR_FILENO);
+		pthread_mutex_unlock(print);
+		return (i);
 	}
-	return (1);
+	return (0);
 }
