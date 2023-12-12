@@ -6,7 +6,7 @@
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:06:29 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/12 10:50:09 by dabdygal         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:59:43 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,13 @@ typedef struct s_shared_resources
 	t_resource		*forks;
 }	t_shared;
 
+typedef enum e_state
+{
+	eating,
+	sleeping,
+	thinking,
+}	t_state;
+
 typedef struct s_philo_seat
 {
 	int				id;
@@ -79,6 +86,8 @@ typedef struct s_philo_seat
 	int				eat_time;
 	int				sleep_time;
 	int				must_eat;
+	int				prev_meal;
+	t_state			state;
 	t_resource		*print;
 	t_resource		*cntrl;
 	t_resource		*right_fork;
