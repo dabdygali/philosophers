@@ -6,7 +6,7 @@
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 13:20:27 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/11 13:53:39 by dabdygal         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:11:05 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	prep_seats(t_seat *seats, t_shared *common)
 		(seats + i)->print = &common->print;
 		(seats + i)->cntrl = &common->cntrl;
 		(seats + i)->right_fork = common->forks + i;
-		if (i != common->total - 1)
+		if (i < common->total - 1)
 			(seats + i)->left_fork = common->forks + i + 1;
 		else
 			(seats + i)->left_fork = common->forks;

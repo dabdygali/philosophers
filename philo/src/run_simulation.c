@@ -6,7 +6,7 @@
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 15:09:18 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/11 17:07:16 by dabdygal         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:12:30 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	start_threads(pthread_t *tid, t_seat *seats, int qty)
 	i = 0;
 	while (i < qty)
 	{
-		if (pthread_create(tid + i, NULL, philosopher, seats + i) != 0)
+		if (pthread_create(tid + i, NULL, philo_thread, (void *)seats + i) != 0)
 		{
 			seats->cntrl->status = -1;
 			unlock_warn(&seats->cntrl->lock, &seats->print->lock);

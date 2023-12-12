@@ -1,27 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_write.c                                    :+:      :+:    :+:   */
+/*   philo_thread.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 16:30:55 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/12 09:48:09 by dabdygal         ###   ########.fr       */
+/*   Created: 2023/12/12 09:40:19 by dabdygal          #+#    #+#             */
+/*   Updated: 2023/12/12 11:13:01 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
 #include "philo.h"
 
-int	control_write(t_seat *seat, int status)
+void	*philo_thread(void *seat)
 {
-	if (lock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
+	t_seat	*s;
+
+	s = (t_seat *) seat;
+	while (1)
 	{
-		seat->cntrl->status = -1;
-		return (-1);
+		if (control_read(s) != 0 || s->must_eat == 0)
+			return (NULL);
 	}
-	seat->cntrl->status = status;
-	if (unlock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
-		return (-1);
-	return (0);
+	return (NULL);
 }

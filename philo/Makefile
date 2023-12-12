@@ -6,7 +6,7 @@
 #    By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/15 15:43:23 by dabdygal          #+#    #+#              #
-#    Updated: 2023/12/11 16:40:11 by dabdygal         ###   ########.fr        #
+#    Updated: 2023/12/12 10:50:23 by dabdygal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,9 @@ SRC_FILES = check_args_warn.c \
 			run_simulation.c \
 			lock_warn.c \
 			unlock_warn.c \
-			control_write.c
+			control_write.c \
+			philo_thread.c \
+			control_read.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:06:29 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/11 16:39:41 by dabdygal         ###   ########.fr       */
+/*   Updated: 2023/12/12 10:50:09 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,7 @@ int		run_simulation(t_seat *seats, int qty);
 int		lock_warn(pthread_mutex_t *mutex, pthread_mutex_t *print);
 int		unlock_warn(pthread_mutex_t *mutex, pthread_mutex_t *print);
 int		control_write(t_seat *seat, int status);
+void	*philo_thread(void *seat);
+int		control_read(t_seat *seat);
 
 #endif
