@@ -6,7 +6,7 @@
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 13:20:27 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/12 15:39:11 by dabdygal         ###   ########.fr       */
+/*   Updated: 2023/12/13 10:57:23 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ static void	prep_seats(t_seat *seats, t_shared *common)
 
 int	init_seats_clean(t_seat **seats, t_shared *common)
 {
-	int	i;
-
 	*seats = (t_seat *) malloc(sizeof(t_seat) * common->total);
 	if (*seats == NULL)
 	{

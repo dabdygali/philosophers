@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_read.c                                     :+:      :+:    :+:   */
+/*   is_dead.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 16:30:55 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/13 14:52:17 by dabdygal         ###   ########.fr       */
+/*   Created: 2023/12/13 12:26:28 by dabdygal          #+#    #+#             */
+/*   Updated: 2023/12/13 16:01:20 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
 #include "philo.h"
+#include <sys/time.h>
 
-int	control_read(t_seat *seat)
+int	is_dead(t_seat *s)
 {
-	int	status;
+	struct timeval	t;
+	int				tmp;
 
-	if (lock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
+	if (gettimeofday(&t, NULL) != 0)
 	{
-		seat->cntrl->status = -1;
+		control_write(s, -1);
 		return (-1);
 	}
-	status = seat->cntrl->status;
-	if (unlock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
+	tmp = (int)((t.tv_sec * 1000) + (t.tv_usec / 1000)) - s->prev_meal;
+	if (tmp > s->die_time || control_read(s))
 	{
-		seat->cntrl->status = -1;
-		return (-1);
-	}
-	if (status != 0)
+		tmp = control_read(s);
+		if (tmp != 0)
+			return (tmp);
+		if (print_dead(s) < 0)
+		{
+			control_write(s, -1);
+			return (-1);
+		}
+		if (control_write(s, 1) < 0)
+			return (-1);
 		return (1);
+	}
 	return (0);
 }

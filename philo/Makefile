@@ -6,7 +6,7 @@
 #    By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/15 15:43:23 by dabdygal          #+#    #+#              #
-#    Updated: 2023/12/12 10:50:23 by dabdygal         ###   ########.fr        #
+#    Updated: 2023/12/13 17:00:38 by dabdygal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,13 +40,28 @@ SRC_FILES = check_args_warn.c \
 			unlock_warn.c \
 			control_write.c \
 			philo_thread.c \
-			control_read.c
+			control_read.c \
+			get_fork.c \
+			think.c \
+			is_dead.c \
+			print_tools.c \
+			ft_itoa.c \
+			ft_strjoin.c \
+			ft_strlen.c \
+			print_dead.c \
+			print_think.c \
+			print_fork.c \
+			chew.c \
+			print_eat.c \
+			safe_sleep.c \
+			print_sleep.c \
+			cancel_fork.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -I $(INCLUDE_DIR)
+CFLAGS = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
 
 # ************************************RULES*********************************** #
 

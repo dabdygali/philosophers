@@ -1,34 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_read.c                                     :+:      :+:    :+:   */
+/*   get_fork.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 16:30:55 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/13 14:52:17 by dabdygal         ###   ########.fr       */
+/*   Created: 2023/12/13 11:08:07 by dabdygal          #+#    #+#             */
+/*   Updated: 2023/12/13 16:06:53 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
 #include "philo.h"
 
-int	control_read(t_seat *seat)
+int	get_fork(t_resource *fork, t_seat *s)
 {
-	int	status;
-
-	if (lock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
+	if (pthread_mutex_lock(&fork->lock) != 0)
 	{
-		seat->cntrl->status = -1;
+		control_write(s, -1);
 		return (-1);
 	}
-	status = seat->cntrl->status;
-	if (unlock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
+	if (fork->status < 0 || fork->status == s->id)
 	{
-		seat->cntrl->status = -1;
-		return (-1);
-	}
-	if (status != 0)
+		if (pthread_mutex_unlock(&fork->lock) != 0)
+		{
+			control_write(s, -1);
+			return (-1);
+		}
 		return (1);
+	}
+	s->tmp = fork->status;
+	fork->status = -1;
+	if (pthread_mutex_unlock(&fork->lock) != 0)
+	{
+		control_write(s, -1);
+		return (-1);
+	}
 	return (0);
 }

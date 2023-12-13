@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_read.c                                     :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 16:30:55 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/13 14:52:17 by dabdygal         ###   ########.fr       */
+/*   Created: 2023/07/04 14:56:24 by dabdygal          #+#    #+#             */
+/*   Updated: 2023/07/04 15:05:01 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
-#include "philo.h"
+#include <stddef.h>
 
-int	control_read(t_seat *seat)
+size_t	ft_strlen(const char *s)
 {
-	int	status;
+	size_t	i;
 
-	if (lock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
+	i = 0;
+	while (*(s + i))
 	{
-		seat->cntrl->status = -1;
-		return (-1);
+		i++;
 	}
-	status = seat->cntrl->status;
-	if (unlock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
-	{
-		seat->cntrl->status = -1;
-		return (-1);
-	}
-	if (status != 0)
-		return (1);
-	return (0);
+	return (i);
 }

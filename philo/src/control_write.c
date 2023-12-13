@@ -6,7 +6,7 @@
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 16:30:55 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/12 09:48:09 by dabdygal         ###   ########.fr       */
+/*   Updated: 2023/12/13 11:19:47 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,9 @@ int	control_write(t_seat *seat, int status)
 	}
 	seat->cntrl->status = status;
 	if (unlock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
+	{
+		seat->cntrl->status = -1;
 		return (-1);
+	}
 	return (0);
 }

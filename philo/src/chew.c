@@ -1,34 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_read.c                                     :+:      :+:    :+:   */
+/*   chew.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 16:30:55 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/13 14:52:17 by dabdygal         ###   ########.fr       */
+/*   Created: 2023/12/13 13:25:01 by dabdygal          #+#    #+#             */
+/*   Updated: 2023/12/13 16:15:01 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
 #include "philo.h"
+#include <unistd.h>
+#include <sys/time.h>
 
-int	control_read(t_seat *seat)
+int	chew(t_seat *s)
 {
-	int	status;
+	struct timeval	t;
+	int				tmp;
 
-	if (lock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
+	tmp = control_read(s);
+	if (tmp != 0)
+		return (tmp);
+	tmp = is_dead(s);
+	if (tmp != 0)
+		return (tmp);
+	if (print_eat(s) < 0)
 	{
-		seat->cntrl->status = -1;
+		control_write(s, -1);
 		return (-1);
 	}
-	status = seat->cntrl->status;
-	if (unlock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
-	{
-		seat->cntrl->status = -1;
+	s->state = eating;
+	if (gettimeofday(&t, NULL))
 		return (-1);
-	}
-	if (status != 0)
-		return (1);
+	s->prev_meal = (int)((t.tv_sec * 1000) + (t.tv_usec / 1000));
+	tmp = safe_sleep(s, s->eat_time);
+	if (tmp != 0)
+		return (tmp);
+	if (s->must_eat > 0)
+		s->must_eat--;
 	return (0);
 }

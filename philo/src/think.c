@@ -1,34 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   control_read.c                                     :+:      :+:    :+:   */
+/*   think.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 16:30:55 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/13 14:52:17 by dabdygal         ###   ########.fr       */
+/*   Created: 2023/12/13 11:51:33 by dabdygal          #+#    #+#             */
+/*   Updated: 2023/12/13 13:21:45 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <pthread.h>
 #include "philo.h"
+#include <unistd.h>
 
-int	control_read(t_seat *seat)
+int	think(t_seat *s)
 {
-	int	status;
+	int	tmp;
 
-	if (lock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
+	tmp = is_dead(s);
+	if (tmp != 0)
+		return (tmp);
+	tmp = control_read(s);
+	if (tmp != 0)
+		return (tmp);
+	if (s->state != thinking)
 	{
-		seat->cntrl->status = -1;
+		s->state = thinking;
+		tmp = print_think(s);
+		if (tmp != 0)
+			return (tmp);
+	}
+	if (usleep((useconds_t) UNIT_SLEEP) != 0)
+	{
+		control_write(s, -1);
 		return (-1);
 	}
-	status = seat->cntrl->status;
-	if (unlock_warn(&seat->cntrl->lock, &seat->print->lock) != 0)
-	{
-		seat->cntrl->status = -1;
-		return (-1);
-	}
-	if (status != 0)
-		return (1);
+	tmp = is_dead(s);
+	if (tmp != 0)
+		return (tmp);
 	return (0);
 }

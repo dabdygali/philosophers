@@ -6,7 +6,7 @@
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:06:29 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/12 15:59:43 by dabdygal         ###   ########.fr       */
+/*   Updated: 2023/12/13 16:06:12 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@
 # if CLA_POS_MUST_EAT < 1 || CLA_POS_MUST_EAT > MAX_ARGC
 #  error "CLA_POS_MUST_EAT_ is setup wrong"
 # endif
+/* Unit sleep time in microseconds*/
+# define UNIT_SLEEP 1000
 
 typedef struct s_mutex_resource
 {
@@ -87,6 +89,8 @@ typedef struct s_philo_seat
 	int				sleep_time;
 	int				must_eat;
 	int				prev_meal;
+	int				start_time;
+	int				tmp;
 	t_state			state;
 	t_resource		*print;
 	t_resource		*cntrl;
@@ -109,5 +113,20 @@ int		unlock_warn(pthread_mutex_t *mutex, pthread_mutex_t *print);
 int		control_write(t_seat *seat, int status);
 void	*philo_thread(void *seat);
 int		control_read(t_seat *seat);
+int		get_fork(t_resource *fork, t_seat *s);
+int		cancel_fork(t_resource *fork, t_seat *s);
+int		think(t_seat *s);
+int		is_dead(t_seat *s);
+char	*ft_itoa(int n);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	*build_str(t_seat *s);
+size_t	ft_strlen(const char *s);
+int		print_dead(t_seat *s);
+int		print_think(t_seat *s);
+int		print_fork(t_seat *s);
+int		print_eat(t_seat *s);
+int		safe_sleep(t_seat *s, int ts);
+int		chew(t_seat *s);
+int		print_sleep(t_seat *s);
 
 #endif
