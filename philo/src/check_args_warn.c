@@ -6,7 +6,7 @@
 /*   By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:04:01 by dabdygal          #+#    #+#             */
-/*   Updated: 2023/12/07 19:33:58 by dabdygal         ###   ########.fr       */
+/*   Updated: 2023/12/13 19:58:48 by dabdygal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	check_args_warn(int argc, char *argv[])
 		return (tmp);
 	while (--argc > 0)
 	{
-		if (ft_str_is_int(argv[argc]) == 0 || ft_atoi(argv[argc]) < 0)
+		if (ft_str_is_int(argv[argc]) == 0 || ft_atoi(argv[argc]) <= 0)
 		{
 			ft_putstr_fd("Invalid argument\n", STDERR_FILENO);
 			return (-1);

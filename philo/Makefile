@@ -6,7 +6,7 @@
 #    By: dabdygal <dabdygal@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/07/15 15:43:23 by dabdygal          #+#    #+#              #
-#    Updated: 2023/12/13 17:00:38 by dabdygal         ###   ########.fr        #
+#    Updated: 2023/12/13 18:07:54 by dabdygal         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ OBJ_FILES = $(SRC_FILES:.c=.o)
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -I $(INCLUDE_DIR)
+CFLAGS = -Wall -Wextra -Werror -pthread -I $(INCLUDE_DIR)
 
 # ************************************RULES*********************************** #
 
